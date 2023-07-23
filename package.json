@@ -11,8 +11,10 @@
   },
   "devDependencies": {
     "@smui/checkbox": "^7.0.0-beta.14",
+    "@smui/circular-progress": "^7.0.0-beta.14",
     "@smui/data-table": "^7.0.0-beta.14",
     "@smui/layout-grid": "^7.0.0-beta.14",
+    "@smui/linear-progress": "^7.0.0-beta.14",
     "@smui/tooltip": "^7.0.0-beta.14",
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "@tsconfig/svelte": "^5.0.0",
@@ -25,6 +27,7 @@
     "vite": "^4.4.0"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "svelte-material-ui": "^7.0.0-beta.14"
   }
 }

@@ -4,14 +4,16 @@
   import axios from 'axios';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import CardTable from './CardTable.svelte';
+  import StatsView from './StatsView.svelte';
 
   const KEY = import.meta.env.VITE_KEY
   const BASEURL = import.meta.env.VITE_BASEURL
 
-  console.log(KEY);
-
   axios.defaults.baseURL = BASEURL;
   axios.defaults.headers.common = {'Authorization': `Bearer ${KEY}`}
+
+  let loaded = false;
+  let allCards: Card[] = [];
 
   let cards: { 
     w: Card[],
@@ -80,6 +82,8 @@
           'Notes': item.fields['Notes'],
         }
 
+        allCards.push(card);
+
         if (card['Type'].includes('Land')) {
           cards['lands'].push(card);
         } else {
@@ -94,6 +98,7 @@
     } while (offset != undefined)
 
     cards = cards;
+    loaded = true;
 
   })
 
@@ -116,25 +121,28 @@
 <main>
   <div class="main">
     <LayoutGrid>
-      <Cell><CardTable title="White" cards={cards['w']} /></Cell>
-      <Cell><CardTable title="Blue" cards={cards['u']} /></Cell>
-      <Cell><CardTable title="Black" cards={cards['b']} /></Cell>
-      <Cell><CardTable title="Red" cards={cards['r']} /></Cell>
-      <Cell><CardTable title="Green" cards={cards['g']} /></Cell>
-      <Cell><CardTable title="Artifacts/Colorless" cards={cards['nc']} /></Cell>
-      <Cell><CardTable title="Lands" cards={cards['lands']} /></Cell>
+      <StatsView cards={allCards} />
     </LayoutGrid>
     <LayoutGrid>
-      <Cell><CardTable title="Azorius" cards={cards['wu']} /></Cell>
-      <Cell><CardTable title="Orzhov" cards={cards['wb']} /></Cell>
-      <Cell><CardTable title="Boros" cards={cards['wr']} /></Cell>
-      <Cell><CardTable title="Selesnya" cards={cards['wg']} /></Cell>
-      <Cell><CardTable title="Dimir" cards={cards['ub']} /></Cell>
-      <Cell><CardTable title="Izzet" cards={cards['ur']} /></Cell>
-      <Cell><CardTable title="Simic" cards={cards['ug']} /></Cell>
-      <Cell><CardTable title="Rakdos" cards={cards['br']} /></Cell>
-      <Cell><CardTable title="Golgari" cards={cards['bg']} /></Cell>
-      <Cell><CardTable title="Gruul" cards={cards['rg']} /></Cell>
+      <Cell><CardTable title="White" cards={cards['w']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Blue" cards={cards['u']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Black" cards={cards['b']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Red" cards={cards['r']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Green" cards={cards['g']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Artifacts/Colorless" cards={cards['nc']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Lands" cards={cards['lands']} loaded={loaded} /></Cell>
+    </LayoutGrid>
+    <LayoutGrid>
+      <Cell><CardTable title="Azorius" cards={cards['wu']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Orzhov" cards={cards['wb']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Boros" cards={cards['wr']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Selesnya" cards={cards['wg']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Dimir" cards={cards['ub']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Izzet" cards={cards['ur']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Simic" cards={cards['ug']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Rakdos" cards={cards['br']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Golgari" cards={cards['bg']} loaded={loaded} /></Cell>
+      <Cell><CardTable title="Gruul" cards={cards['rg']} loaded={loaded} /></Cell>
     </LayoutGrid>
   </div>
 </main>
